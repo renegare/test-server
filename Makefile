@@ -1,4 +1,5 @@
 APP_NAME=$(notdir $(shell pwd))
+APP_VERSION=$(shell git rev-parse --short HEAD)
 DOCKER_REGISTRY=$(if $(DOCKER_REGISTRY_USER),$(DOCKER_REGISTRY_USER),$(USER))/$(APP_NAME)
 
 start:
@@ -23,7 +24,7 @@ tag: ## tag latest image using git sha as tag
 push: ## push latest built image to registry
 	printf "Pushing $(DOCKER_REGISTRY):$(APP_VERSION) ... "
 	if [ -n "$(DOCKER_REGISTRY_USER)" ]; then \
-		docker login -e $(DOCKER_REGISTRY_EMAIL) -u $(DOCKER_REGISTRY_USER) -p $(DOCKER_REGISTRY_PASS) $(DOCKER_REGISTRY_HOST) https://index.docker.io/v1/; \
+		docker login -e $(DOCKER_REGISTRY_EMAIL) -u $(DOCKER_REGISTRY_USER) -p $(DOCKER_REGISTRY_PASS) https://index.docker.io/v1/; \
 	fi
 	docker push $(DOCKER_REGISTRY)
 	echo Done
