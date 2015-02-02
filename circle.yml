@@ -1,0 +1,21 @@
+machine:
+    php:
+        version: 5.5.8
+    services:
+        - docker
+dependencies:
+    override:
+        - docker version
+        - make -s build
+                timeout: 300
+
+test:
+    override:
+        - echo TBC
+
+deployment:
+    production:
+        branch: master
+        commands:
+            - make -s tag push:
+                    timeout: 300
